@@ -1,0 +1,21 @@
+// Code signing for the iosApp target.
+//
+// `DEVELOPMENT_TEAM` is a per-machine value — an Apple developer team ID only works on the Mac
+// that holds the matching certificate and private key, so committing one team ID would break the
+// build for everyone else. It lives in `Signing.local.xcconfig`, which is gitignored.
+//
+// After cloning, create that file next to this one:
+//
+//     DEVELOPMENT_TEAM = XXXXXXXXXX
+//
+// Find your team ID with:
+//
+//     security find-certificate -c "Apple Development: <your apple id>" -p \
+//       | openssl x509 -noout -subject
+//
+// and read it out of the `OU=` field. Xcode's Signing & Capabilities tab also writes the value,
+// but into the .xcodeproj — put it here instead so the project file stays machine-neutral.
+//
+// The include is optional (`#include?`), so a clone with no local file still configures and
+// builds for the Simulator; only a device build fails, with "requires a development team".
+#include? "Signing.local.xcconfig"

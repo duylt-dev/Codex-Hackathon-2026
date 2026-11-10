@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>vi</string>
+	<key>CFBundleDisplayName</key>
+	<string>Saola</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+
+	<!--
+	  The app ships Vietnamese and English and lets the traveller switch between them in
+	  Settings, so the bundle has to declare both rather than inheriting one from the device.
+	-->
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>vi</string>
+		<string>en</string>
+	</array>
+
+	<!-- Every prompt the app can raise, in the traveller's own terms. -->
+	<key>NSCameraUsageDescription</key>
+	<string>Saola points its lens at landmarks, dishes and signs so it can tell you what you are looking at.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your rough location tells apart two temples that look alike, and fills in the province on your travel passport.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Pick a photo you have already taken and have it recognised.</string>
+
+	<!-- An empty dictionary is the "plain background" launch screen; naming an empty colour
+	     is invalid rather than defaulted. -->
+	<key>UILaunchScreen</key>
+	<dict/>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<!-- arm64, not armv7: the 32-bit requirement in Xcode's template can never be met by
+		     any device or simulator this app supports, and validation rejects the bundle. -->
+		<string>arm64</string>
+	</array>
+	<!--
+	  iPhone: portrait and both landscapes. Unlocked 05.08.2026 by phase 10.
+
+	  It was portrait-only because the ten phone screens were framed for the tall edge, and
+	  the survey that phase opened with found that claim was true of exactly one of them.
+	  Nine either scroll or fit at 832 × 384dp — measured on a Galaxy A16, which is the same
+	  window an iPhone gives sideways — and the lens, which does neither, now arranges as a
+	  row below `StackableMinHeight`. See `mobile/feature/camera/LensScreen.kt`.
+
+	  Upside down is left out, and that is not an oversight carried over: a phone has a right
+	  way up and the earpiece is at the top of it. An iPad below does include it, for the
+	  opposite reason.
+	-->
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<!--
+	  iPad: all four, which is what makes the large-window branch reachable at all.
+
+	  `SaolaRoot` picks the tablet shell from the window's own measurements — 840dp wide
+	  and 600dp tall — and an iPad locked to portrait is 834 points across, six short of the
+	  threshold. Measured on an iPad Pro 11-inch (M4) simulator on 04.08.2026: portrait 834 ×
+	  1210 draws the phone's bottom bar, landscape 1210 × 834 draws the rail and the panel.
+	  Without this key the branch exists in the binary and nothing can ever show it.
+	  Upside down is included deliberately: an iPad has no single right way up.
+	-->
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<!--
+	  Required by Compose Multiplatform, which refuses to start without it.
+
+	  Without the key iOS caps an app at 60 Hz on a 120 Hz display, and Compose would render at
+	  half the rate the panel can do. CMP treats that as a misconfiguration rather than a
+	  degradation and throws from the first composition, so the app builds, launches and then
+	  aborts — see `PlistSanityCheck`.
+	-->
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+</dict>
+</plist>

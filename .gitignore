@@ -1,0 +1,65 @@
+*.iml
+.gradle
+/local.properties
+# The whole IDE directory, not a list of its noisier files. What was tracked here
+# was machine-local state — the last deployment target, the device manager's cache,
+# an artifacts entry per module — none of which another clone wants, and all of
+# which the IDE rewrites on its own. Anything the build genuinely needs lives in
+# Gradle, not in .idea.
+/.idea/
+.DS_Store
+# Every module's build output, not just the root one. A leading slash would match
+# `/build` alone and quietly track app/build, data/build and domain/build — 393 MB
+# of generated Room and Compose code that changes on every compile.
+build/
+/captures
+.externalNativeBuild
+.cxx
+.kotlin
+local.properties
+
+# Signing material: keystores stay on the machine that owns them.
+# Credentials live in local.properties (also ignored above).
+*.jks
+*.keystore
+
+# Province pipeline intermediates: a 22 MB Overpass dump and a 9.7 MB Natural Earth
+# extract, both re-downloadable by the recipe in tools/provinces/README.md. The
+# curated archipelago geometry and the generated provinces.json *are* committed —
+# they are what the app ships.
+tools/provinces/osm_raw.json
+tools/provinces/ne_land.geojson
+tools/provinces/provinces.json
+tools/provinces/*.png
+
+# `tools/seed/.work/` is deliberately NOT ignored: the 24 photographs the seeder fetches from
+# Wikimedia Commons are tracked, so seeding is reproducible without a network round trip and
+# so the exact images in the screenshots can be reviewed in a diff. Only the working copy of
+# the device database is transient.
+tools/seed/.work/saola.db
+tools/seed/.work/saola.db-wal
+tools/seed/.work/saola.db-shm
+
+# Room's exported schemas. Generated on every build from the `@Database` declaration, so
+# they are output, not source. Their one real use is auto-migrations and migration tests,
+# and this app declares no migrations at all — `fallbackToDestructiveMigration` resets a
+# stale file instead, because nothing is published. Tracking them only produced a new
+# numbered JSON in every diff that touched an entity.
+data/schemas/
+
+# Synced into the Xcode project by `:data:copySharedAssetsToIos` before every framework build.
+# Build output; `data/src/androidMain/assets` is the single source of truth.
+# (Compose resources need no entry here — the Compose plugin writes those straight into the
+# built .app rather than into the project directory.)
+/iosApp/SharedAssets/
+/iosApp/build/
+# Per-user Xcode state. The *shared* scheme under xcshareddata/ is committed on purpose:
+# Android Studio's Kotlin Multiplatform run configuration and CI both resolve the target
+# through it, and a scheme that only exists in xcuserdata is invisible to them.
+xcuserdata/
+*.xcuserstate
+# The signing team ID, which is per-machine: it only resolves on the Mac holding the matching
+# certificate. `iosApp/Signing.xcconfig` is committed and optionally includes this file.
+/iosApp/Signing.local.xcconfig
+
+app/release
